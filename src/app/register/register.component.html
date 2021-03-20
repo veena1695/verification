@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="container" *ngIf="!msgFlag">
+        <div class="title">verification for Personal Loan</div>
+        <div class="content">
+            <form action="#">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">City</span>
+                        <div class="custom_select">
+                            <select class="form-select" [(ngModel)]="formObj.city" name="city" #city="ngModel" required>
+                                <option disabled selected hidden>Select city</option>
+                                <option *ngFor="let city of cityArr">{{city}}</option>
+                            </select>
+                            <span *ngIf="city.invalid && city.errors.required && (city.dirty || city.touched)">
+                                <p class="text-danger"></p>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Email </span>
+                        <input type="email" [(ngModel)]="formObj.email" name="email" #email="ngModel"
+                            placeholder="Enter your email" maxlength="255" required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                        <span *ngIf="email.invalid && email.errors.required && (email.dirty || email.touched)">
+                            <p class="text-danger">please enter email</p>
+                        </span>
+                        <span *ngIf="email.invalid && email.errors.pattern && (email.dirty || email.touched)">
+                            <p class="text-danger">Email is invalid</p>
+                        </span>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Pan Number</span>
+                        <input [(ngModel)]="formObj.panNumber" name="panNumber" #panNumber="ngModel" type="text"
+                            placeholder="Enter your Pan number" maxlength="10" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}"
+                            required>
+                        <span
+                            *ngIf="panNumber.invalid && panNumber.errors.required && (panNumber.dirty || panNumber.touched)">
+                            <p class="text-danger">please enter Pan number</p>
+                        </span>
+                        <span
+                            *ngIf="panNumber.invalid && panNumber.errors.pattern && (panNumber.dirty || panNumber.touched)">
+                            <p class="text-danger">Pan Number is invalid</p>
+                        </span>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Phone Number</span>
+                        <div class="row">
+                            <input class="col-2 mr-2" type="text" value="+91" disabled>
+                            <input class="col" (keypress)="isNumberKey($event,'mobile',mobile)"
+                                (input)="checkField('mobile',mobile)" [(ngModel)]="formObj.mobile" name="mobile"
+                                #mobile="ngModel" type="text" placeholder="Enter your number" maxlength="10" required>
+                        </div>
+                        <span *ngIf="mobile.invalid && mobile.errors.required && (mobile.dirty || mobile.touched)">
+                            <p class="text-danger">please enter mobile number</p>
+                        </span>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Full Name</span>
+                        <input [(ngModel)]="formObj.fullname" name="fullname" #fullname="ngModel" type="text"
+                            placeholder="Enter your name" maxlength="140" required>
+                        <span *ngIf="fullname.invalid && fullname.errors.required && (fullname.dirty || fullname.touched)">
+                            <p class="text-danger">please enter full name</p>
+                        </span>
+
+                    </div>
+                    <div class="input-box" *ngIf="showOTP">
+                        <span class="details">OTP</span>
+                        <div class="row">
+                            <input class="col mr-2" (input)="checkField()" [(ngModel)]="otp" name="otp" type="text"
+                                maxlength="4" (keypress)="isNumberKey($event);" placeholder="Enter your otp">
+                            <input class="col btn btn-danger" [disabled]="resendFlag" (click)="resendOTP()"
+                                type="submit" value="Resend OTP">
+                        </div>
+                        <p *ngIf="clock>0" class="text-danger"><b>Resend in </b> {{time}}</p>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <p>{{msg}}</p>
+                </div>
+                <!-- <div class="button" *ngIf="showOTP"> {{resendFlag}}
+                    <input [disabled] = "resendFlag"   (click)="OnSubmit()" type="submit" value="Resend OTP">
+                </div> -->
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="msgFlag">
+        <h1>Thank you for verification {{formObj.fullname}}</h1>
+
+
+    </div>
+
+</body>
+
+</html>
