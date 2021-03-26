@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RegisterComponent } from './register/register.component';
+import { VerifyComponent } from './verify/verify.component';
 
 const routes: Routes = [
-  {path: "verify", component: RegisterComponent},
+  {path: "verify", component: VerifyComponent},
   {path: "", redirectTo: "verify", pathMatch: "full"}
 ];
 
